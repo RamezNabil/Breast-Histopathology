@@ -27,7 +27,7 @@ def load_data():
             for img in os.listdir(rel_directory + folder + '/' + labelfolder):
                 if len(label) == 15000:
                     return features, label
-                label.append(labelfolder)
+                label.append(int(labelfolder))
                 img_data = cv2.imread(os.path.join(rel_directory, folder, labelfolder, img))
                 img_data = cv2.resize(img_data, (224, 224))
                 features.append(img_data)
