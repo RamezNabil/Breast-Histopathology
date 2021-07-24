@@ -31,7 +31,7 @@ def load_data():
                 features.append(img_data)
 
     # shuffle both lists
-    both = list(zip(data, label))  # join both arrays together
+    both = list(zip(features, label))  # join both arrays together
     random.shuffle(both)  # shuffle
     b: object
     a, b = zip(*both)  # disconnect them from each other
