@@ -30,6 +30,9 @@ def load_data():
                 img_data = cv2.resize(img_data, (224, 224))
                 features.append(img_data)
 
-    return features,label
-
-features, label = load_data()
+    # shuffle both lists
+    both = list(zip(data, label))  # join both arrays together
+    random.shuffle(both)  # shuffle
+    b: object
+    a, b = zip(*both)  # disconnect them from each other
+    return a, b
