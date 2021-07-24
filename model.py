@@ -100,9 +100,9 @@ def plot_curve(epochs, hist, list_of_metrics):
     plt.xlabel("Epoch")
     plt.ylabel("Value")
 
-    # for m in list_of_metrics:
-    x = hist["accuracy"]
-    plt.plot(epochs[1:], x[1:], label="accuracy")
+    for m in list_of_metrics:
+        x = hist[m]
+        plt.plot(epochs[1:], x[1:], label=m)
 
     plt.show()
 
