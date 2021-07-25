@@ -1,7 +1,7 @@
 import os
 import cv2
 import random
-import matplotlib.pyplot  as plt
+import matplotlib.pyplot as plt
 
 rel_directory = './Dataset/'
 directory = r'C:\Users\Ramez\PycharmProjects\Breast-Histopathology\Dataset\\'
@@ -31,6 +31,7 @@ def load_data():
                 img_data = cv2.imread(os.path.join(rel_directory, folder, labelfolder, img))
                 img_data = cv2.resize(img_data, (224, 224))
                 features.append(img_data)
+
 
 def shuffle_data(features, label):
     # shuffle both lists

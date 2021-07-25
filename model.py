@@ -11,7 +11,6 @@ from tensorflow.keras import regularizers
 pd.options.display.max_rows = 10
 pd.options.display.float_format = "{:.1f}".format
 
-
 def create_model(learning_rate, classification_threshold):
     model = models.Sequential()
 
@@ -115,8 +114,8 @@ y_train = np.array(label[:12000])
 X_test = np.array(np.array(features[12000:])).reshape(-1, 224, 224, 3)
 y_test = np.array(label[12000:])
 
-learning_rate = 0.1
-epochs = 20
+learning_rate = 0.001
+epochs = 10
 batch_size = 32
 classification_threshold = 0.5
 
