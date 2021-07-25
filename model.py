@@ -11,7 +11,7 @@ from tensorflow.keras import regularizers
 pd.options.display.max_rows = 10
 pd.options.display.float_format = "{:.1f}".format
 
-def create_model(learning_rate, classification_threshold):
+def create_model(learning_rate, classification_threshold, METRICS):
     model = models.Sequential()
 
     # Define the first hidden layer with 20 nodes.
@@ -56,9 +56,9 @@ def create_model(learning_rate, classification_threshold):
     model.add(layers.Dense(1000))
     model.add(layers.Activation('relu'))
 
-    model.add(layers.Dense(1))
+    model.add(layers.Dense(1, activation='softmax'))
 
-    # model.add(layers.Dense(10))
+
 
     # checkpoint = ModelCheckpoint('best_model_improved.h5',
     #                              monitor='val_loss',
@@ -67,7 +67,7 @@ def create_model(learning_rate, classification_threshold):
     #                              mode='auto')
     model.compile(optimizer=tf.keras.optimizers.RMSprop(lr=learning_rate),
                   loss=tf.keras.losses.BinaryCrossentropy(),
-                  metrics=[tf.keras.metrics.BinaryAccuracy(name='accuracy', threshold=classification_threshold)])
+                  metrics=METRICS)
 
     return model
 
@@ -113,11 +113,20 @@ X_test = np.array(np.array(features[12000:])).reshape(-1, 224, 224, 3)
 y_test = np.array(label[12000:])
 
 learning_rate = 0.001
-epochs = 10
+epochs = 1
 batch_size = 32
 classification_threshold = 0.5
+list_of_metrics_to_plot = ['accuracy', 'precision', 'recall']
+METRICS = [
+      tf.keras.metrics.BinaryAccuracy(name='accuracy',
+                                      threshold=classification_threshold),
+      tf.keras.metrics.Precision(thresholds=classification_threshold,
+                                 name='precision'
+                                 ),
+      tf.keras.metrics.Recall(thresholds=classification_threshold,
+                              name="recall")
+]
 
-
-my_model = create_model(learning_rate, classification_threshold)
+my_model = create_model(learning_rate, classification_threshold, METRICS)
 epoch, hist = train_model(my_model, X_train, y_train, X_test, y_test, epochs, batch_size)
-plot_curve(epoch, hist, [tf.keras.metrics.BinaryAccuracy(name='accuracy', threshold=classification_threshold)])
+plot_curve(epoch, hist, list_of_metrics_to_plot)
