@@ -21,42 +21,40 @@ def create_model(learning_rate, classification_threshold):
     #                                 activity_regularizer=regularizers.l2(0.01)
     #                                 ))
 
-    model.add(layers.Conv2D(32, (3, 3), padding='same', input_shape=(224, 224, 3)))
-    model.add(layers.Activation('relu'))
-    model.add(layers.Dropout(0.2))
+    model.add(layers.Conv2D(64, (3, 3), padding='same', activation='relu', input_shape=(224, 224, 3)))
+    model.add(layers.Conv2D(64, (3, 3), padding='same', activation='relu'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'))
 
-    model.add(layers.BatchNormalization())
+    model.add(layers.Conv2D(128, (3, 3), padding='same', activation='relu'))
+    model.add(layers.Conv2D(128, (3, 3), padding='same', activation='relu'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides= (2,2), padding= 'valid'))
 
-    model.add(layers.Conv2D(64, (3, 3), padding='same'))
-    model.add(layers.Activation('relu'))
+    model.add(layers.Conv2D(256, (3, 3), padding='same', activation='relu'))
+    model.add(layers.Conv2D(256, (3, 3), padding='same', activation='relu'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides= (2,2), padding= 'valid'))
 
-    model.add(layers.MaxPooling2D(pool_size=(2,2)))
-    model.add(layers.Dropout(0.2))
-    model.add(layers.BatchNormalization())
+    model.add(layers.Conv2D(512, (3, 3), padding='same', activation='relu'))
+    model.add(layers.Conv2D(512, (3, 3), padding='same', activation='relu'))
+    model.add(layers.Conv2D(512, (3, 3), padding='same', activation='relu'))
+    model.add(layers.Conv2D(512, (3, 3), padding='same', activation='relu'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides= (2,2), padding= 'valid'))
 
-    model.add(layers.Conv2D(64, (3, 3), padding='same'))
-    model.add(layers.Activation('relu'))
-    model.add(layers.MaxPooling2D(pool_size=(2, 2)))
-    model.add(layers.Dropout(0.2))
-    model.add(layers.BatchNormalization())
-
-    model.add(layers.Conv2D(128, (3, 3), padding='same'))
-    model.add(layers.Activation('relu'))
-    model.add(layers.Dropout(0.2))
-    model.add(layers.BatchNormalization())
+    model.add(layers.Conv2D(512, (3, 3), padding='same', activation='relu'))
+    model.add(layers.Conv2D(512, (3, 3), padding='same', activation='relu'))
+    model.add(layers.Conv2D(512, (3, 3), padding='same', activation='relu'))
+    model.add(layers.Conv2D(512, (3, 3), padding='same', activation='relu'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides= (2,2), padding= 'valid'))
 
     model.add(layers.Flatten())
-    model.add(layers.Dropout(0.2))
 
-    model.add(layers.Dense(256, kernel_constraint=maxnorm(3)))
+    model.add(layers.Dense(4096))
     model.add(layers.Activation('relu'))
-    model.add(layers.Dropout(0.2))
-    model.add(layers.BatchNormalization())
 
-    model.add(layers.Dense(128, kernel_constraint=maxnorm(3)))
+    model.add(layers.Dense(4096))
     model.add(layers.Activation('relu'))
-    model.add(layers.Dropout(0.2))
-    model.add(layers.BatchNormalization())
+
+    model.add(layers.Dense(1000))
+    model.add(layers.Activation('relu'))
 
     model.add(layers.Dense(1))
 
